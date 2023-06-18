@@ -1,0 +1,85 @@
+using Microsoft.VisualBasic;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
+
+class Capybaras
+{
+    static void _Array_(Array array_1)
+    {
+        bool flag_1 = true;
+        while (flag_1)
+        {
+            Console.Clear();
+            Array array = new string[array_1.Length];
+            Array.Copy(array_1, array, array_1.Length);
+            Console.WriteLine("Общий вид: " + 
+                "\n[ " + array.GetValue(0) + ", " + array.GetValue(1) + ", " + array.GetValue(2) + " ]\n");
+            Console.WriteLine("1.Очистка ( Clear() ) " +
+                "\n2.Кол - во элементов  ( Lenght )" +
+                "\n3.Изменение порядка элементов на обратный ( Reverse() ) " +
+                "\n4.Сортировка( Sort() )" +
+                "\n5.Индекс первого вхождения ( IndexOf() )" +
+                "\nНажмите Backspace для выхода");
+            ConsoleKey key = Console.ReadKey().Key;
+            Console.Clear();
+            switch (key)
+            {
+                case ConsoleKey.D1:
+                    Console.WriteLine("Общий вид: " +
+                        "\n[ " + array.GetValue(0) + ", " + array.GetValue(1) + ", " + array.GetValue(2) + " ]");
+                    Console.WriteLine("Результат:" +
+                        "[ ]");
+                    Console.ReadLine();
+                    break;
+                case ConsoleKey.D2:
+                    Console.WriteLine("Общий вид: " +
+                        "\n[ " + array.GetValue(0) + ", " + array.GetValue(1) + ", " + array.GetValue(2) + " ]");
+                    Console.WriteLine("Результат: "
+                        + array.Length);
+                    Console.ReadLine();
+                    break;
+                case ConsoleKey.D3:
+                    Console.WriteLine("Общий вид: " + 
+                        "\n[ " + array.GetValue(0) + ", " + array.GetValue(1) + ", " + array.GetValue(2) + " ]");
+                    Array.Reverse(array);
+                    Console.WriteLine("Результат: " +
+                        "\n[ " + array.GetValue(0) + ", " + array.GetValue(1) + ", " + array.GetValue(2) + " ]");
+                    Console.ReadLine();
+                    break;
+                case ConsoleKey.D4:
+                    Console.WriteLine("Общий вид: " + 
+                        "\n[ " + array.GetValue(0) + ", " + array.GetValue(1) + ", " + array.GetValue(2) + " ]");
+                    Array.Sort(array);
+                    Console.WriteLine("Результат: " + 
+                        "\n[ " + array.GetValue(0) + ", " + array.GetValue(1) + ", " + array.GetValue(2) + " ]");
+                    Console.ReadLine();
+                    break;
+                case ConsoleKey.D5:
+                    Console.Write("Введите элемент: ");
+                    dynamic index = Console.ReadLine();
+                    Console.Clear();
+                    Console.WriteLine("Общий вид: " + 
+                        "\n[ " + array.GetValue(0) + ", " + array.GetValue(1) + ", " + array.GetValue(2) + " ]");
+                    Console.WriteLine("Индекс первого вхождения " + index + " : " + Array.IndexOf(array, index));
+                    Console.ReadLine();
+                    break;
+                case ConsoleKey.Backspace:
+                    Console.Clear();
+                    flag_1 = false;
+                    break;
+            }
+        }
+    }
+
+    static void Main(string[] Chapybaras)
+    {
+        Console.WriteLine("Введите 3 элемента");
+        var array = Array.CreateInstance(typeof(string), 3);
+        array.SetValue(Console.ReadLine(), 0);
+        array.SetValue(Console.ReadLine(), 1);
+        array.SetValue(Console.ReadLine(), 2);
+        _Array_(array);
+    }
+}

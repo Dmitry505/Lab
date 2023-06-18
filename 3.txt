@@ -1,0 +1,320 @@
+using System;
+using System.Collections.Generic;
+using System.Security.Cryptography;
+
+namespace Manaules_otocolobes
+{
+    public class Rabotyagi
+    {
+        public struct Trudovaya_k
+        {
+            public string organizaciya;
+            public int nachalo;
+            public int uvolen;
+            public void trudovaya_k(string organizaciya, int nachalo, int uvolen)
+            {
+                this.organizaciya = organizaciya;
+                this.nachalo = nachalo;
+                this.uvolen = uvolen;
+            }
+        }
+        public struct Ypravlenci
+        {
+            public string name;
+            public string dolg;
+            public int staj;
+            public List<Trudovaya_k> trud_k;
+            public Dictionary<DateTime, string> prikazi_i_rasporyazenia;
+            public void ypravlenci(string name, string dolg, List<Trudovaya_k> trud_k, Dictionary<DateTime, string> prikazi_i_rasporyazenia, int staj)
+            {
+                this.name = name;
+                this.dolg = dolg;
+                this.prikazi_i_rasporyazenia = prikazi_i_rasporyazenia;
+                this.trud_k= trud_k;
+                this.staj = staj;
+            }
+            public void vivod()
+            {
+                Console.WriteLine(name + "\n" + dolg);
+                Console.WriteLine("Информация из трудовой книжки: ");
+                foreach (Trudovaya_k item in trud_k)
+                {
+                    Console.WriteLine("Наименование организации: " + item.organizaciya);
+                    Console.WriteLine("Начало работы: " + item.nachalo);
+                    Console.WriteLine("Окончание: " + item.uvolen + "\n");
+                }
+            }
+        }
+        public struct Osnovnie
+        {
+            public string name;
+            public string dolg;
+            public List<Trudovaya_k> trud_k;
+            public Dictionary<DateTime, int> pechat;
+            public int staj;
+            public void osnovnie(string name, string dolg, List<Trudovaya_k> trud_k, Dictionary<DateTime, int> pechat, int staj)
+            {
+                this.name = name;
+                this.dolg = dolg;
+                this.trud_k = trud_k;
+                this.pechat = pechat;
+                this.staj = staj;
+            }
+            public void vivod()
+            {
+                Console.WriteLine(name + "\n" + dolg);
+                Console.WriteLine("Информация из трудовой книжки: ");
+                foreach(Trudovaya_k item in trud_k)
+                {
+                    Console.WriteLine("Наименование организации: " + item.organizaciya);
+                    Console.WriteLine("Начало работы: " + item.nachalo);
+                    Console.WriteLine("Окончание: " + item.uvolen);
+                }
+            }
+        }
+        public struct Vspomogatelnie
+        {
+            public string name;
+            public string dolg;
+            public List<Trudovaya_k> trud_k;
+            public Dictionary<DateTime, string> data_rabota;
+            public int staj;
+            public void vspomogatelnie(string name, string dolg, List<Trudovaya_k> trud_k, Dictionary<DateTime, string> data_rabota,int staj)
+            {
+                this.name = name;
+                this.dolg = dolg;
+                this.data_rabota = data_rabota;
+                this.trud_k = trud_k;
+                this.staj = staj;
+            }
+            public void vivod()
+            {
+                Console.WriteLine(name + "\n" + dolg);
+                Console.WriteLine("Информация из трудовой книжки: ");
+                foreach (Trudovaya_k item in trud_k)
+                {
+                    Console.WriteLine("Наименование организации: " + item.organizaciya);
+                    Console.WriteLine("Начало работы: " + item.nachalo);
+                    Console.WriteLine("Окончание: " + item.uvolen);
+                }
+            }
+        }
+    }
+    class Capybarass : Rabotyagi
+    {
+        static void Main(string[] Chupacabra)
+        {
+            int rabotniki = 0;
+            Rabotyagi byfer = new();
+            List<Ypravlenci> ypravlenci_list = new();
+            List<Osnovnie> osnovnie_list = new();
+            List<Vspomogatelnie> vspomogatelnie_list = new();
+            int year = 2023;
+            bool flag = true;
+            while (flag)
+            {
+                Console.WriteLine("1.Добавление персонала" +
+                    "\n2.Выборка персонала" +
+                    "\n3.Выход");
+                ConsoleKey key_1 = Console.ReadKey().Key;
+                Console.Clear();
+                switch (key_1)
+                {
+                    case ConsoleKey.D1:
+                        int staj = 0;
+                        List<Trudovaya_k> trudovaya = new();
+                        Console.WriteLine("1.Управленцы" +
+                            "\n2.Основные" +
+                            "\n3.Вспомогательные" +
+                            "\n4.Выход");
+                        ConsoleKey key_2 = Console.ReadKey().Key;
+                        Console.Clear();
+                        if (key_2 == ConsoleKey.D4) { break; }
+                        rabotniki += 1;
+                        Console.Write("Имя: ");
+                        string name = Console.ReadLine();
+                        Console.Write("Должность: ");
+                        string dolg = Console.ReadLine();
+                        Console.WriteLine("Предыдущие места работы(по окончании напишите стоп): ");
+                        while (true)
+                        {
+                            Trudovaya_k trud = new();
+                            Console.Write("Наименование организации: ");
+                            string organizaciya = Console.ReadLine();
+                            Console.Write("Дата Начала работы: ");
+                            int nachalo = int.Parse(Console.ReadLine());
+                            Console.Write("Дата окончания (либо ключевое слово работает): ");
+                            string uvolen_1 = Console.ReadLine();
+                            int uvolen_2;
+                            if (uvolen_1 == "работает") { uvolen_2 = year; }
+                            else { uvolen_2 = int.Parse(uvolen_1); }
+                            staj += uvolen_2 - nachalo;
+                            trud.trudovaya_k(organizaciya, nachalo, uvolen_2);
+                            trudovaya.Add(trud);
+                            Console.WriteLine("Продолжить?");
+                            if (Console.ReadLine() == "стоп") { break; }
+                        }
+                        switch (key_2)
+                        {
+                            case ConsoleKey.D1:
+                                Dictionary<DateTime, string> prikazi = new();
+                                Console.WriteLine("Приказы и распоряжения(по окончании стоп)");
+                                while (true)
+                                {
+                                    Console.WriteLine("Дата(год, месяц, день): ");
+                                    DateTime data = new(int.Parse(Console.ReadLine()), int.Parse(Console.ReadLine()), int.Parse(Console.ReadLine()));
+                                    Console.WriteLine("Номер: ");
+                                    string nomer = Console.ReadLine();
+                                    prikazi.Add(data, nomer);
+                                    Console.WriteLine("Продолжить?");
+                                    if (Console.ReadLine() == "стоп") { break; }
+                                }
+                                Ypravlenci ypravlenci = new();
+                                ypravlenci.ypravlenci(name, dolg, trudovaya, prikazi, staj);
+                                ypravlenci_list.Add(ypravlenci);
+                                break;
+                            case ConsoleKey.D2:
+                                Dictionary<DateTime, int> pechat = new();
+                                Osnovnie osnovnie = new();
+                                while (true)
+                                {
+                                    Console.WriteLine("Количество печати день: ");
+                                    Console.Write("Введите дату(год, месяц, день): ");
+                                    DateTime date = new DateTime(int.Parse(Console.ReadLine()), int.Parse(Console.ReadLine()), int.Parse(Console.ReadLine()));
+                                    Console.Write("Кол - во работ: ");
+                                    int pechat_N = int.Parse(Console.ReadLine());
+                                    pechat.Add(date, pechat_N);
+                                    Console.WriteLine("Продолжить?");
+                                    if (Console.ReadLine() == "стоп") { break; }
+                                }
+                                osnovnie.osnovnie(name, dolg, trudovaya, pechat, staj);
+                                osnovnie_list.Add(osnovnie);
+                                Console.Clear();
+                                break;
+                            case ConsoleKey.D3:
+                                Vspomogatelnie vspomogatelnie = new();
+                                Dictionary<DateTime, string> dict = new();
+                                while (true)
+                                {
+                                    Console.Write("Выполненная работа: ");
+                                    string rab = Console.ReadLine();
+                                    Console.WriteLine("Дата(год, месяц, день): ");
+                                    DateTime data = new DateTime(int.Parse(Console.ReadLine()), int.Parse(Console.ReadLine()), int.Parse(Console.ReadLine()));
+                                    dict.Add(data, rab);
+                                    Console.WriteLine("Продолжить? ");
+                                    if (Console.ReadLine() == "стоп") { break; }
+                                }
+                                vspomogatelnie.vspomogatelnie(name, dolg, trudovaya, dict, staj);
+                                vspomogatelnie_list.Add(vspomogatelnie);
+                                break;
+                        }
+                        Console.Clear();
+                        break;
+                    case ConsoleKey.D2:
+                        Console.WriteLine("1.Общий стаж" +
+                            "\n2.Стаж работы на последнем месте" +
+                            "\n3.Кол - во работ отпечатанных за диапазон дат" +
+                            "\n4.работы вспомогательных" +
+                            "\n5.выборка приказов составленных определенным лицом" +
+                            "\n6.Выход");
+                        ConsoleKey key_3 = Console.ReadKey().Key;
+                        Console.Clear();
+                        switch (key_3)
+                        {
+                            case ConsoleKey.D1:
+                                Console.Write("Введите общий стаж: ");
+                                int stag_1 = int.Parse(Console.ReadLine());
+                                foreach(Ypravlenci item in ypravlenci_list)
+                                {
+                                    if (stag_1 == item.staj) { item.vivod(); }
+                                }
+                                foreach (Osnovnie item in osnovnie_list)
+                                {
+                                    if (stag_1 == item.staj) { item.vivod(); }
+                                }
+                                foreach (Vspomogatelnie item in vspomogatelnie_list)
+                                {
+                                    if (stag_1 == item.staj) { item.vivod(); }
+                                }
+                                Console.ReadLine();
+                                Console.Clear();
+                                break;
+                            case ConsoleKey.D2:
+                                Console.Write("Введите стаж на последнем месте: ");
+                                int stag_2 = int.Parse(Console.ReadLine());
+                                foreach (Ypravlenci item in ypravlenci_list)
+                                {
+                                    if (stag_2 == item.trud_k[item.trud_k.Count() - 1].uvolen - item.trud_k[item.trud_k.Count() - 1].nachalo) { item.vivod(); }
+                                }
+                                foreach (Osnovnie item in osnovnie_list)
+                                {
+                                    if (stag_2 == item.trud_k[item.trud_k.Count() - 1].uvolen - item.trud_k[item.trud_k.Count() - 1].nachalo) { item.vivod(); }
+                                }
+                                foreach (Vspomogatelnie item in vspomogatelnie_list)
+                                {
+                                    if (stag_2 == item.trud_k[item.trud_k.Count() - 1].uvolen - item.trud_k[item.trud_k.Count() - 1].nachalo) { item.vivod(); }
+                                }
+                                Console.ReadLine();
+                                Console.Clear();
+                                break;
+                            case ConsoleKey.D3:
+                                Console.Write("Начальная дата(год, месяц, день): ");
+                                DateTime nach = new(int.Parse(Console.ReadLine()), int.Parse(Console.ReadLine()), int.Parse(Console.ReadLine()));
+                                Console.Write("Конечная дата(год, месяц, день): ");
+                                DateTime kon = new(int.Parse(Console.ReadLine()), int.Parse(Console.ReadLine()), int.Parse(Console.ReadLine()));
+                                Console.Write("Кол - во работ: ");
+                                int N = int.Parse(Console.ReadLine());
+                                Console.Clear();
+                                foreach (Osnovnie item in osnovnie_list)
+                                {
+                                    int N_1 = 0;
+                                    foreach(var item_1 in item.pechat)
+                                    {
+                                        if ((item_1.Key < kon) && (item_1.Key > nach)) { N_1 += item_1.Value; }
+                                    }
+                                    if ( N == N_1) { item.vivod(); }
+                                }
+                                Console.ReadLine();
+                                Console.Clear();
+                                break;
+                            case ConsoleKey.D4:
+                                Console.Write("Введите интересующую работу: ");
+                                string rab = Console.ReadLine();
+                                foreach (Vspomogatelnie item in vspomogatelnie_list)
+                                {
+                                    foreach (var item_1 in item.data_rabota)
+                                    {
+                                        if (item_1.Value == rab) { item.vivod(); }
+                                    }
+                                }
+                                Console.ReadLine();
+                                Console.Clear();
+                                break;
+                            case ConsoleKey.D5:
+                                Console.Write("Имя интерсующего вас управленца: ");
+                                string name_1 = Console.ReadLine();
+                                foreach(Ypravlenci item in ypravlenci_list)
+                                {
+                                    if(item.name == name_1)
+                                    {
+                                        foreach(var item_1 in item.prikazi_i_rasporyazenia)
+                                        {
+                                            Console.WriteLine($"Номер Приказа(распоряжения): {item_1.Key}  Дата: {item_1.Value}");
+                                        }
+                                    }
+                                }
+                                Console.ReadLine();
+                                Console.Clear();
+                                break;
+                            case ConsoleKey.D6:
+                                break;
+                        }
+                        break;
+                    case ConsoleKey.D3:
+                        flag = false;
+                        break;
+                }
+            }
+        }
+    }
+}
